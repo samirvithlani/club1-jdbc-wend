@@ -1,0 +1,9 @@
+use club1;
+show tables;
+
+************
+create table student(sid int primary key auto_increment,sname varchar(30),sage int);
+
+desc student;
+
+************
