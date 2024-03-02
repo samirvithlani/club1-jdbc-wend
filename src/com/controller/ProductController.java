@@ -2,6 +2,7 @@ package com.controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.util.DBConnection;
@@ -98,13 +99,49 @@ public class ProductController {
 		
 		
 	}
+	
+	public void getAllProducts() {
+		
+		
+		Connection conn = DBConnection.getDBConnection();
+		if(conn!=null) {
+			
+//			String SELECTSQL = "select * from product where pid =?";
+			String SELECTSQL = "select * from product where pid";
+		
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SELECTSQL);
+				//pstmt.setInt(1,2);
+				//rs -->it us an interface...
+				ResultSet rs = pstmt.executeQuery();
+				//
+				System.out.println("PID \t PNAME \t\t PPRICE \t PCOLOR \t PQTY");
+				while(rs.next()) {
+				
+					System.out.print(rs.getInt("pid"));
+					System.out.print(" \t "+rs.getString("pname"));
+					System.out.print("\t\t"+rs.getInt("pprice"));
+					System.out.print(" \t "+rs.getString("pcolor"));
+					System.out.print(" \t "+rs.getInt("pqty"));
+					System.out.println();
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 
 	public static void main(String[] args) {
 
 		ProductController productController = new ProductController();
 		// productController.addProduct();
 //		productController.updateProduct();
-		productController.deleteProduct();
+		//productController.deleteProduct();
+		productController.getAllProducts();
 
 	}
 }
